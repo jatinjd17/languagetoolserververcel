@@ -39,7 +39,15 @@ def hello_world():
             incrementcountnumber = countnumber + 1
             lengthdb.find_one_and_update({},{'$set': {'count': incrementcountnumber}})
             return 'nolinktrigger'
-    
+
+@app.route("/verifyip")
+def Verifyipp():
+    uniqueip = mongo.db.ip
+    isuniqip = uniqueip.find_one({'uniqueipp': '123'})
+    if(isuniqip):
+        return 'ip-already-used'
+    else:
+        return 'ip-never-used'
     # f = open("filee.txt", "r")
     # lines = int(f.read())
     # if(lines < 5):
