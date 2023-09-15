@@ -45,6 +45,7 @@ def hello_world():
 def Verifyipp():
     if request.method == 'POST':
         neww = request.get_json()
+        print(neww)
         myip = neww['ip']
         uniqueip = mongo.db.ip
         isuniqip = uniqueip.find_one({'uniqueipp': myip})
