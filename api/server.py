@@ -26,7 +26,7 @@ def hello_world():
         lengthdb.find_one_and_update({},{'$set': {'count': incrementcountnumber}})
         return 'nolinktrigger'
 
-    elif(lines == 20):
+    elif(countnumber == 20):
         lengthdb.find_one_and_update({},{'$set': {'count': 1}})
         return 'trigger'
     else:
