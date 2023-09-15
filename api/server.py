@@ -47,6 +47,7 @@ def Verifyipp():
     if(isuniqip):
         return 'ip-already-used'
     else:
+        adduniqip = uniqueip.insert_one({'uniqueipp': '123'})
         return 'ip-never-used'
     # f = open("filee.txt", "r")
     # lines = int(f.read())
