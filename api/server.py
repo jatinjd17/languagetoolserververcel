@@ -17,7 +17,7 @@ mongo = PyMongo(app)
 def hello_world():
     lengthdb = mongo.db.length
     count = lengthdb.find_one({})
-    countnumber = int(count.count)
+    countnumber = int(count[count])
     # return str(count)
     
     if(countnumber < 13):
