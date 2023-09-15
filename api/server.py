@@ -17,7 +17,27 @@ mongo = PyMongo(app)
 def hello_world():
     lengthdb = mongo.db.length
     count = lengthdb.find_one({})
-    return str(count)
+    countnumber = int(count.count)
+    # return str(count)
+    
+    if(countnumber < 13):
+        print('nolinktrigger')
+        incrementcountnumber = countnumber + 1
+        lengthdb.find_one_and_update({count: incrementcountnumber})
+        return 'nolinktrigger'
+
+    elif(lines == 20):
+        lengthdb.find_one_and_update({count: 1})
+        return 'trigger'
+    else:
+        b = random.randrange(0,3)
+        if(b == 2):
+            lengthdb.find_one_and_update({count: 1})
+            return 'trigger'
+        else:
+            incrementcountnumber = countnumber + 1
+            lengthdb.find_one_and_update({count: incrementcountnumber})
+            return 'nolinktrigger'
     
     # f = open("filee.txt", "r")
     # lines = int(f.read())
