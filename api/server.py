@@ -40,15 +40,18 @@ def hello_world():
             lengthdb.find_one_and_update({},{'$set': {'count': incrementcountnumber}})
             return 'nolinktrigger'
 
-@app.route("/verifyip")
+@app.route("/verifyip", methods=['GET','POST'])
 def Verifyipp():
-    uniqueip = mongo.db.ip
-    isuniqip = uniqueip.find_one({'uniqueipp': '123'})
-    if(isuniqip):
-        return 'ip-already-used'
-    else:
-        adduniqip = uniqueip.insert_one({'uniqueipp': '123'})
-        return 'ip-never-used'
+    if request.method == 'POST':
+        neww = request.get_json()
+        myip = neww['ip']
+        uniqueip = mongo.db.ip
+        isuniqip = uniqueip.find_one({'uniqueipp': myip})
+        if(isuniqip):
+            return 'ip-already-used'
+        else:
+            adduniqip = uniqueip.insert_one({'uniqueipp': myip})
+            return 'ip-never-used'
     # f = open("filee.txt", "r")
     # lines = int(f.read())
     # if(lines < 5):
