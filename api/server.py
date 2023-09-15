@@ -23,20 +23,20 @@ def hello_world():
     if(countnumber < 13):
         print('nolinktrigger')
         incrementcountnumber = countnumber + 1
-        lengthdb.find_one_and_update({count: incrementcountnumber})
+        lengthdb.find_one_and_update({},{'$set': {'count': incrementcountnumber}})
         return 'nolinktrigger'
 
     elif(lines == 20):
-        lengthdb.find_one_and_update({count: 1})
+        lengthdb.find_one_and_update({},{'$set': {'count': 1}})
         return 'trigger'
     else:
         b = random.randrange(0,3)
         if(b == 2):
-            lengthdb.find_one_and_update({count: 1})
+            lengthdb.find_one_and_update({},{'$set': {'count': 1}})
             return 'trigger'
         else:
             incrementcountnumber = countnumber + 1
-            lengthdb.find_one_and_update({count: incrementcountnumber})
+            lengthdb.find_one_and_update({},{'$set': {'count': incrementcountnumber}})
             return 'nolinktrigger'
     
     # f = open("filee.txt", "r")
