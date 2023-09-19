@@ -54,6 +54,82 @@ def Verifyipp():
         else:
             adduniqip = uniqueip.insert_one({'uniqueipp': myip})
             return 'ip-never-used'
+
+@app.route("/createinstance", methods=['GET','POST'])
+def createinstancee():
+    if request.method == 'POST':
+        neww = request.get_json()
+
+        email = neww['ipindex']
+        print(email)
+        zonesss = {'northamerica-northeast1-a':'162','northamerica-northeast2-a':'188','southamerica-east1-b':'158','southamerica-west1-a':'194','us-central1-c':'128','us-east1-b':'142','us-east4-c':'150','us-east5-a':'202','us-south1-a':'206','us-west1-c':'138','us-west2-a':'168','us-west3-a':'180','us-west4-a':'182','europe-central2-a':'186','europe-north1-a':'166','europe-southwest1-a':'204','europe-west1-b':'132','europe-west10-a':'214','europe-west12-a':'210','europe-west2-c':'154','europe-west3-c':'156','europe-west4-a':'164','europe-west6-a':'172','europe-west8-a':'198','europe-west9-a':'200','me-central1-a':'212','me-west1-a':'208','asia-east1-b':'140','asia-east2-a':'170','asia-northeast1-b':'146','asia-northeast2-a':'174','asia-northeast3-a':'178','asia-south1-c':'160','asia-south2-a':'190','asia-southeast1-b':'148','asia-southeast2-a':'184','australia-southeast1-b':'152','australia-southeast2-a':'192'}
+
+        projectID = 'silent-card-399405'
+        serviceaccount = '87528303241'
+        listip1 = ""
+        listip2 = ""
+        listip3 = ""
+        listip4 = ""
+        # listip5 = ""
+        key, value = list(zonesss.items())[int(email)]
+        print("Get key of specified index:", key)  
+        print("Get value of specified index:", value)
+        # return 'echo 12345'
+        zone = key
+        zoneip = value 
+        for y in range(1,5):
+            ran = True
+            while ran == True:
+                tempip = f"10.{zoneip}.{random.randrange(0,14)}.{random.randrange(0,255)}"
+                # tempip = f"10.138.9.55"
+                print(tempip)
+                # tempip = '10.162.6.42'
+                isuniqip = internalipcollection.find_one({'uniqueipp': tempip})
+
+                if(isuniqip):
+                    print('Duplicate found!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+                    ran = True
+                    continue
+                else:
+                    
+                    adduniqip = internalipcollection.insert_one({'uniqueipp': tempip})
+                    if y == 1:
+                        listip1 = tempip
+                    elif y == 2:
+                        listip2 = tempip
+                    elif y == 3:
+                        listip3 = tempip
+                    elif y == 4:
+                        listip4 = tempip
+                    # elif y == 5:
+                    #     listip5 = tempip
+                    ran = False
+        createscript = f"gcloud compute instances create instance-1 --project={projectID} --zone={zone} --machine-type=e2-medium --access-token-file=token.txt --network-interface=network-tier=PREMIUM,private-network-ip={listip1},subnet=default --metadata=startup-script=\\#\\!/bin/bash$'\\n'sudo\\ apt-get\\ update\\ -y$'\\n'sudo\\ apt\\ install\\ python3-pip\\ -y$'\\n'sudo\\ apt\\ install\\ wget\\ -y$'\\n'sudo\\ apt\\ install\\ ffmpeg\\ -y$'\\n'sudo\\ apt\\ install\\ unzip$'\\n'wget\\ https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/116.0.5845.96/linux64/chromedriver-linux64.zip$'\\n'unzip\\ chromedriver-linux64.zip$'\\n'cd\\ chromedriver-linux64$'\\n'chmod\\ \\+x\\ chromedriver$'\\n'sudo\\ mv\\ -f\\ chromedriver\\ /usr/local/share/chromedriver$'\\n'sudo\\ ln\\ -s\\ /usr/local/share/chromedriver\\ /usr/local/bin/chromedriver$'\\n'sudo\\ ln\\ -s\\ /usr/local/share/chromedriver\\ /usr/bin/chromedriver$'\\n'wget\\ -q\\ -O\\ -\\ https://dl-ssl.google.com/linux/linux_signing_key.pub\\ \\|\\ sudo\\ apt-key\\ add\\ -$'\\n'echo\\ \\'deb\\ \\[arch=amd64\\]\\ http://dl.google.com/linux/chrome/deb/\\ stable\\ main\\'\\ \\|\\ sudo\\ tee\\ /etc/apt/sources.list.d/google-chrome.list$'\\n'sudo\\ apt-get\\ update\\ -y$'\\n'sudo\\ apt-get\\ install\\ google-chrome-stable\\ -y$'\\n'sudo\\ pip3\\ install\\ selenium$'\\n'sudo\\ apt\\ install\\ git\\ -y$'\\n'pip3\\ install\\ undetected_chromedriver$'\\n'sudo\\ pip3\\ install\\ SpeechRecognition$'\\n'sudo\\ pip3\\ install\\ pydub$'\\n'sudo\\ pip3\\ install\\ names$'\\n'cd\\ /usr/local/share$'\\n'sudo\\ git\\ clone\\ https://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@github.com/jatinjd17/ubuntuserver.git$'\\n'cd\\ ubuntuserver/$'\\n'sudo\\ unzip\\ Grammar-Checker-Paraphraser-–-LanguageTool\\ -d\\ ./Grammar/$'\\n'sudo\\ python3\\ newlanguagetoolauto.py,enable-oslogin=true --maintenance-policy=MIGRATE --provisioning-model=STANDARD --service-account={serviceaccount}-compute@developer.gserviceaccount.com --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append --create-disk=auto-delete=yes,boot=yes,device-name=instance-1,image=projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20230907,mode=rw,size=10,type=projects/{projectID}/zones/{zone}/diskTypes/pd-balanced --no-shielded-secure-boot --shielded-vtpm --shielded-integrity-monitoring --labels=goog-ec-src=vm_add-gcloud --reservation-affinity=any & gcloud compute instances create instance-2 --project={projectID} --zone={zone} --machine-type=e2-medium --access-token-file=token.txt --network-interface=network-tier=PREMIUM,private-network-ip={listip2},subnet=default --metadata=startup-script=\\#\\!/bin/bash$'\\n'sudo\\ apt-get\\ update\\ -y$'\\n'sudo\\ apt\\ install\\ python3-pip\\ -y$'\\n'sudo\\ apt\\ install\\ wget\\ -y$'\\n'sudo\\ apt\\ install\\ ffmpeg\\ -y$'\\n'sudo\\ apt\\ install\\ unzip$'\\n'wget\\ https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/116.0.5845.96/linux64/chromedriver-linux64.zip$'\\n'unzip\\ chromedriver-linux64.zip$'\\n'cd\\ chromedriver-linux64$'\\n'chmod\\ \\+x\\ chromedriver$'\\n'sudo\\ mv\\ -f\\ chromedriver\\ /usr/local/share/chromedriver$'\\n'sudo\\ ln\\ -s\\ /usr/local/share/chromedriver\\ /usr/local/bin/chromedriver$'\\n'sudo\\ ln\\ -s\\ /usr/local/share/chromedriver\\ /usr/bin/chromedriver$'\\n'wget\\ -q\\ -O\\ -\\ https://dl-ssl.google.com/linux/linux_signing_key.pub\\ \\|\\ sudo\\ apt-key\\ add\\ -$'\\n'echo\\ \\'deb\\ \\[arch=amd64\\]\\ http://dl.google.com/linux/chrome/deb/\\ stable\\ main\\'\\ \\|\\ sudo\\ tee\\ /etc/apt/sources.list.d/google-chrome.list$'\\n'sudo\\ apt-get\\ update\\ -y$'\\n'sudo\\ apt-get\\ install\\ google-chrome-stable\\ -y$'\\n'sudo\\ pip3\\ install\\ selenium$'\\n'sudo\\ apt\\ install\\ git\\ -y$'\\n'pip3\\ install\\ undetected_chromedriver$'\\n'sudo\\ pip3\\ install\\ SpeechRecognition$'\\n'sudo\\ pip3\\ install\\ pydub$'\\n'sudo\\ pip3\\ install\\ names$'\\n'cd\\ /usr/local/share$'\\n'sudo\\ git\\ clone\\ https://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@github.com/jatinjd17/ubuntuserver.git$'\\n'cd\\ ubuntuserver/$'\\n'sudo\\ unzip\\ Grammar-Checker-Paraphraser-–-LanguageTool\\ -d\\ ./Grammar/$'\\n'sudo\\ python3\\ newlanguagetoolauto.py,enable-oslogin=true --maintenance-policy=MIGRATE --provisioning-model=STANDARD --service-account={serviceaccount}-compute@developer.gserviceaccount.com --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append --create-disk=auto-delete=yes,boot=yes,device-name=instance-2,image=projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20230907,mode=rw,size=10,type=projects/{projectID}/zones/{zone}/diskTypes/pd-balanced --no-shielded-secure-boot --shielded-vtpm --shielded-integrity-monitoring --labels=goog-ec-src=vm_add-gcloud --reservation-affinity=any & gcloud compute instances create instance-3 --project={projectID} --zone={zone} --machine-type=e2-medium --access-token-file=token.txt --network-interface=network-tier=PREMIUM,private-network-ip={listip3},subnet=default --metadata=startup-script=\\#\\!/bin/bash$'\\n'sudo\\ apt-get\\ update\\ -y$'\\n'sudo\\ apt\\ install\\ python3-pip\\ -y$'\\n'sudo\\ apt\\ install\\ wget\\ -y$'\\n'sudo\\ apt\\ install\\ ffmpeg\\ -y$'\\n'sudo\\ apt\\ install\\ unzip$'\\n'wget\\ https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/116.0.5845.96/linux64/chromedriver-linux64.zip$'\\n'unzip\\ chromedriver-linux64.zip$'\\n'cd\\ chromedriver-linux64$'\\n'chmod\\ \\+x\\ chromedriver$'\\n'sudo\\ mv\\ -f\\ chromedriver\\ /usr/local/share/chromedriver$'\\n'sudo\\ ln\\ -s\\ /usr/local/share/chromedriver\\ /usr/local/bin/chromedriver$'\\n'sudo\\ ln\\ -s\\ /usr/local/share/chromedriver\\ /usr/bin/chromedriver$'\\n'wget\\ -q\\ -O\\ -\\ https://dl-ssl.google.com/linux/linux_signing_key.pub\\ \\|\\ sudo\\ apt-key\\ add\\ -$'\\n'echo\\ \\'deb\\ \\[arch=amd64\\]\\ http://dl.google.com/linux/chrome/deb/\\ stable\\ main\\'\\ \\|\\ sudo\\ tee\\ /etc/apt/sources.list.d/google-chrome.list$'\\n'sudo\\ apt-get\\ update\\ -y$'\\n'sudo\\ apt-get\\ install\\ google-chrome-stable\\ -y$'\\n'sudo\\ pip3\\ install\\ selenium$'\\n'sudo\\ apt\\ install\\ git\\ -y$'\\n'pip3\\ install\\ undetected_chromedriver$'\\n'sudo\\ pip3\\ install\\ SpeechRecognition$'\\n'sudo\\ pip3\\ install\\ pydub$'\\n'sudo\\ pip3\\ install\\ names$'\\n'cd\\ /usr/local/share$'\\n'sudo\\ git\\ clone\\ https://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@github.com/jatinjd17/ubuntuserver.git$'\\n'cd\\ ubuntuserver/$'\\n'sudo\\ unzip\\ Grammar-Checker-Paraphraser-–-LanguageTool\\ -d\\ ./Grammar/$'\\n'sudo\\ python3\\ newlanguagetoolauto.py,enable-oslogin=true --maintenance-policy=MIGRATE --provisioning-model=STANDARD --service-account={serviceaccount}-compute@developer.gserviceaccount.com --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append --create-disk=auto-delete=yes,boot=yes,device-name=instance-3,image=projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20230907,mode=rw,size=10,type=projects/{projectID}/zones/{zone}/diskTypes/pd-balanced --no-shielded-secure-boot --shielded-vtpm --shielded-integrity-monitoring --labels=goog-ec-src=vm_add-gcloud --reservation-affinity=any & gcloud compute instances create instance-4 --project={projectID} --zone={zone} --machine-type=e2-medium --access-token-file=token.txt --network-interface=network-tier=PREMIUM,private-network-ip={listip4},subnet=default --metadata=startup-script=\\#\\!/bin/bash$'\\n'sudo\\ apt-get\\ update\\ -y$'\\n'sudo\\ apt\\ install\\ python3-pip\\ -y$'\\n'sudo\\ apt\\ install\\ wget\\ -y$'\\n'sudo\\ apt\\ install\\ ffmpeg\\ -y$'\\n'sudo\\ apt\\ install\\ unzip$'\\n'wget\\ https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/116.0.5845.96/linux64/chromedriver-linux64.zip$'\\n'unzip\\ chromedriver-linux64.zip$'\\n'cd\\ chromedriver-linux64$'\\n'chmod\\ \\+x\\ chromedriver$'\\n'sudo\\ mv\\ -f\\ chromedriver\\ /usr/local/share/chromedriver$'\\n'sudo\\ ln\\ -s\\ /usr/local/share/chromedriver\\ /usr/local/bin/chromedriver$'\\n'sudo\\ ln\\ -s\\ /usr/local/share/chromedriver\\ /usr/bin/chromedriver$'\\n'wget\\ -q\\ -O\\ -\\ https://dl-ssl.google.com/linux/linux_signing_key.pub\\ \\|\\ sudo\\ apt-key\\ add\\ -$'\\n'echo\\ \\'deb\\ \\[arch=amd64\\]\\ http://dl.google.com/linux/chrome/deb/\\ stable\\ main\\'\\ \\|\\ sudo\\ tee\\ /etc/apt/sources.list.d/google-chrome.list$'\\n'sudo\\ apt-get\\ update\\ -y$'\\n'sudo\\ apt-get\\ install\\ google-chrome-stable\\ -y$'\\n'sudo\\ pip3\\ install\\ selenium$'\\n'sudo\\ apt\\ install\\ git\\ -y$'\\n'pip3\\ install\\ undetected_chromedriver$'\\n'sudo\\ pip3\\ install\\ SpeechRecognition$'\\n'sudo\\ pip3\\ install\\ pydub$'\\n'sudo\\ pip3\\ install\\ names$'\\n'cd\\ /usr/local/share$'\\n'sudo\\ git\\ clone\\ https://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@github.com/jatinjd17/ubuntuserver.git$'\\n'cd\\ ubuntuserver/$'\\n'sudo\\ unzip\\ Grammar-Checker-Paraphraser-–-LanguageTool\\ -d\\ ./Grammar/$'\\n'sudo\\ python3\\ newlanguagetoolauto.py,enable-oslogin=true --maintenance-policy=MIGRATE --provisioning-model=STANDARD --service-account={serviceaccount}-compute@developer.gserviceaccount.com --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append --create-disk=auto-delete=yes,boot=yes,device-name=instance-4,image=projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20230907,mode=rw,size=10,type=projects/{projectID}/zones/{zone}/diskTypes/pd-balanced --no-shielded-secure-boot --shielded-vtpm --shielded-integrity-monitoring --labels=goog-ec-src=vm_add-gcloud --reservation-affinity=any"
+        # print(createscript)
+        return createscript
+
+@app.route("/deleteinstance", methods=['GET','POST'])
+def deleteinstancee():
+    if request.method == 'POST':
+        neww = request.get_json()
+
+        email = neww['ipindex']
+        print(email)
+        zonesss = {'northamerica-northeast1-a':'162','northamerica-northeast2-a':'188','southamerica-east1-b':'158','southamerica-west1-a':'194','us-central1-c':'128','us-east1-b':'142','us-east4-c':'150','us-east5-a':'202','us-south1-a':'206','us-west1-c':'138','us-west2-a':'168','us-west3-a':'180','us-west4-a':'182','europe-central2-a':'186','europe-north1-a':'166','europe-southwest1-a':'204','europe-west1-b':'132','europe-west10-a':'214','europe-west12-a':'210','europe-west2-c':'154','europe-west3-c':'156','europe-west4-a':'164','europe-west6-a':'172','europe-west8-a':'198','europe-west9-a':'200','me-central1-a':'212','me-west1-a':'208','asia-east1-b':'140','asia-east2-a':'170','asia-northeast1-b':'146','asia-northeast2-a':'174','asia-northeast3-a':'178','asia-south1-c':'160','asia-south2-a':'190','asia-southeast1-b':'148','asia-southeast2-a':'184','australia-southeast1-b':'152','australia-southeast2-a':'192'}
+
+        projectID = 'silent-card-399405'
+        serviceaccount = '87528303241'
+
+        key, value = list(zonesss.items())[int(email)]
+        print("Get key of specified index:", key)  
+        print("Get value of specified index:", value)
+        # return 'echo 12345'
+        zone = key
+        zoneip = value
+
+        deletescript = f"gcloud compute instances delete instance-1 instance-2 instance-3 instance-4 --project={projectID} --access-token-file=token.txt --quiet --zone={zone}"
+
+        return deletescript
     # f = open("filee.txt", "r")
     # lines = int(f.read())
     # if(lines < 5):
