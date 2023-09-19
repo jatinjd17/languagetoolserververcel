@@ -113,8 +113,14 @@ def createinstancee():
         createscript3 = f"gcloud compute instances create instance-3 --project=silent-card-399405 --zone={zone} --machine-type=e2-medium --access-token-file=token.txt --network-interface=network-tier=PREMIUM,private-network-ip={listip3},subnet=default --metadata-from-file startup-script=my_startup_script.sh --service-account=87528303241-compute@developer.gserviceaccount.com --create-disk=auto-delete=yes,boot=yes,device-name=instance-3,image=projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20230907,mode=rw,size=10,type=projects/silent-card-399405/zones/{zone}/diskTypes/pd-balanced --no-shielded-secure-boot --shielded-vtpm --shielded-integrity-monitoring --reservation-affinity=any"
         createscript4 = f"gcloud compute instances create instance-4 --project=silent-card-399405 --zone={zone} --machine-type=e2-medium --access-token-file=token.txt --network-interface=network-tier=PREMIUM,private-network-ip={listip4},subnet=default --metadata-from-file startup-script=my_startup_script.sh --service-account=87528303241-compute@developer.gserviceaccount.com --create-disk=auto-delete=yes,boot=yes,device-name=instance-4,image=projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20230907,mode=rw,size=10,type=projects/silent-card-399405/zones/{zone}/diskTypes/pd-balanced --no-shielded-secure-boot --shielded-vtpm --shielded-integrity-monitoring --reservation-affinity=any"
         # createscript = f"gcloud compute instances create instance-1 --project=silent-card-399405 --zone={zone} --machine-type=e2-medium --access-token-file=token.txt --network-interface=network-tier=PREMIUM,private-network-ip={listip1},subnet=default --metadata-from-file startup-script=my_startup_script.sh --service-account=87528303241-compute@developer.gserviceaccount.com --create-disk=auto-delete=yes,boot=yes,device-name=instance-1,image=projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20230907,mode=rw,size=10,type=projects/silent-card-399405/zones/{zone}/diskTypes/pd-balanced --no-shielded-secure-boot --shielded-vtpm --shielded-integrity-monitoring --labels=goog-ec-src=vm_add-gcloud --reservation-affinity=any"
+        value = {
+        "createscript1": createscript1,
+        "createscript2": createscript2,
+        "createscript3": createscript3,
+        "createscript4": createscript4
+    }
         # print(createscript)
-        return createscript1
+        return json.dumps(value)
 
 @app.route("/deleteinstance", methods=['GET','POST'])
 def deleteinstancee():
