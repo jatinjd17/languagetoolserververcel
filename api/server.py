@@ -16,7 +16,7 @@ cors = CORS(app, resources={
     }
 })
 mongo = PyMongo(app)
-internalipcollection = mongo.db.internalip
+internalipcollection = mongo.db.exampleinternalip
 
 @app.route("/")
 def hello_world():
