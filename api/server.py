@@ -20,6 +20,34 @@ internalipcollection = mongo.db.internalip
 
 @app.route("/")
 def hello_world():
+    return 'Hello'
+    # lengthdb = mongo.db.length
+    # count = lengthdb.find_one({})
+    # countnumber = int(count['count'])
+    # # return str(count.count)
+    
+    # if(countnumber < 13):
+    #     print('nolinktrigger')
+    #     incrementcountnumber = countnumber + 1
+    #     lengthdb.find_one_and_update({},{'$set': {'count': incrementcountnumber}})
+    #     return 'nolinktrigger'
+
+    # elif(countnumber == 20):
+    #     lengthdb.find_one_and_update({},{'$set': {'count': 1}})
+    #     return 'trigger'
+    # else:
+    #     b = random.randrange(0,3)
+    #     if(b == 2):
+    #         lengthdb.find_one_and_update({},{'$set': {'count': 1}})
+    #         return 'trigger'
+    #     else:
+    #         incrementcountnumber = countnumber + 1
+    #         lengthdb.find_one_and_update({},{'$set': {'count': incrementcountnumber}})
+    #         return 'nolinktrigger'
+
+
+@app.route("/lengthtrigger")
+def lengthtriggerr():
     lengthdb = mongo.db.length
     count = lengthdb.find_one({})
     countnumber = int(count['count'])
