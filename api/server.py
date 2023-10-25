@@ -109,12 +109,12 @@ def createinstancee():
         print(email)
         zonesss = {'northamerica-northeast1-a':'162','northamerica-northeast2-a':'188','southamerica-east1-b':'158','southamerica-west1-a':'194','us-central1-c':'128','us-east1-b':'142','us-east4-c':'150','us-east5-a':'202','us-south1-a':'206','us-west1-c':'138','us-west2-a':'168','us-west3-a':'180','us-west4-a':'182','europe-central2-a':'186','europe-north1-a':'166','europe-southwest1-a':'204','europe-west1-b':'132','europe-west10-a':'214','europe-west12-a':'210','europe-west2-c':'154','europe-west3-c':'156','europe-west4-a':'164','europe-west6-a':'172','europe-west8-a':'198','europe-west9-a':'200','australia-southeast1-b':'152','australia-southeast2-a':'192'}
 
-        # projectID = 'silent-card-399405'
-        # serviceaccount = '87528303241'
+        projectID = 'silent-card-399405'
+        serviceaccount = '87528303241'
         # projectID = 'second-project-400407'
         # serviceaccount = '391024631902'
-        projectID = 'thirdproject-402906'
-        serviceaccount = '46009241767'
+        # projectID = 'thirdproject-402906'
+        # serviceaccount = '46009241767'
         listip1 = ""
         listip2 = ""
         listip3 = ""
@@ -178,9 +178,9 @@ def deleteinstancee():
         print(email)
         zonesss = {'northamerica-northeast1-a':'162','northamerica-northeast2-a':'188','southamerica-east1-b':'158','southamerica-west1-a':'194','us-central1-c':'128','us-east1-b':'142','us-east4-c':'150','us-east5-a':'202','us-south1-a':'206','us-west1-c':'138','us-west2-a':'168','us-west3-a':'180','us-west4-a':'182','europe-central2-a':'186','europe-north1-a':'166','europe-southwest1-a':'204','europe-west1-b':'132','europe-west10-a':'214','europe-west12-a':'210','europe-west2-c':'154','europe-west3-c':'156','europe-west4-a':'164','europe-west6-a':'172','europe-west8-a':'198','europe-west9-a':'200','australia-southeast1-b':'152','australia-southeast2-a':'192'}
 
-        # projectID = 'silent-card-399405'
+        projectID = 'silent-card-399405'
         # projectID = 'second-project-400407'
-        projectID = 'thirdproject-402906'
+        # projectID = 'thirdproject-402906'
         # serviceaccount = '87528303241'
 
         key, value = list(zonesss.items())[int(email)]
