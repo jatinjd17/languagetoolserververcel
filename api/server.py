@@ -52,6 +52,9 @@ def lengthtriggerr():
     count = lengthdb.find_one({})
     countnumber = int(count['count'])
     # return str(count.count)
+    ###################### NEW FOR SHOPLIZZA MOZILLA START #############################
+    return 'trigger'
+    ###################### END #############################
     
     if(countnumber < 13):
         print('nolinktrigger')
